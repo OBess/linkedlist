@@ -8,16 +8,14 @@ int main(int /*argc*/, char const * /*argv*/[])
     list.push_back(1);
     list.push_back(2);
     list.push_back(3);
-    list.push_back(4);
 
     std::cout << list[0] << '\n';
     std::cout << list[1] << '\n';
     std::cout << list[2] << '\n';
-    std::cout << list[3] << '\n';
 
     try
     {
-        std::cout << list[4] << '\n';
+        std::cout << list[3] << '\n';
     }
     catch (const std::exception &e)
     {
