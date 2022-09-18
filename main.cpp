@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include "include/linkedlist.hpp"
+#include <linkedlist.hpp>
 
 int main(int /*argc*/, char const * /*argv*/[])
 {

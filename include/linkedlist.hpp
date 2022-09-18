@@ -3,6 +3,8 @@
 #ifndef INCL_LINKEDLIST_HPP
 #define INCL_LINKEDLIST_HPP
 
+#include <stdexcept>
+
 namespace container
 {
     namespace detail
