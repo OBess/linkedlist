@@ -119,6 +119,14 @@ namespace container
 
         constexpr linkedlist() = default;
 
+        linkedlist(std::initializer_list<Type> list)
+        {
+            for (auto &el : list)
+            {
+                push_back(std::move(el));
+            }
+        }
+
         ~linkedlist()
         {
             if (_parent)
@@ -147,35 +155,45 @@ namespace container
             return iterator(_last);
         }
 
-        void push_back(const Type &value)
+        void push_back(Type &&value)
         {
             if (_parent == nullptr)
             {
-                _parent = new node(value);
+                _parent = new node(std::move(value));
                 _last = _parent;
             }
             else
             {
-                _last->next = new node(value, _last);
+                _last->next = new node(std::move(value), _last);
                 _last = _last->next;
             }
             ++_size;
+        }
+
+        void push_back(const Type &value)
+        {
+            push_back(Type(value));
         }
 
         void push_front(const Type &value)
         {
             if (_parent == nullptr)
             {
-                _parent = new node(value);
+                _parent = new node(std::move(value));
                 _last = _parent;
             }
             else
             {
-                node *tmp = new node(value, nullptr, _parent);
+                node *tmp = new node(std::move(value), nullptr, _parent);
                 _parent = tmp;
             }
 
             ++_size;
+        }
+
+        void push_front(const Type &value)
+        {
+            push_front(Type(value));
         }
 
         void pop_back() noexcept
