@@ -1,5 +1,7 @@
 #include <gtest/gtest.h>
 
+#include <linkedlist.hpp>
+
 TEST(GettingElement, Something)
 {
     EXPECT_TRUE(true);

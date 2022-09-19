@@ -8,7 +8,7 @@ if (MSVC)
 else()
 endif()
 
-target_include_directories(tests PUBLIC ${INCLUDES} PUBLIC include)
+target_include_directories(tests PUBLIC PUBLIC "../include")
 target_link_libraries(tests PRIVATE GTest::gmock GTest::gtest GTest::gmock_main GTest::gtest_main)
 
 add_test(NAME tests COMMAND tests)
