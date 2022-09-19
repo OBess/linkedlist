@@ -7,6 +7,7 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 # - Директорія для згенерованих файлів
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/deploy)
 
+enable_testing()
 add_subdirectory(tests)
 
 file(GLOB src *.cpp *.hpp *.c *.h *.cc)
