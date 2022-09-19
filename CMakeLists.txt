@@ -4,6 +4,12 @@ project(linkedlist VERSION 1.0)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED True)
 
+set(CMAKE_BUILD_TYPE "Release")
+set(CMAKE_TOOLCHAIN_FILE "C:/My/Projects/vcpkg/scripts/buildsystems/vcpkg.cmake")
+set(VCPKG_TARGET_TRIPLET "x64-windows-static")
+set(VCPKG_BUILD_TYPE "Release")
+set(CMAKE_GENERATOR_PLATFORM "x64")
+
 # - Директорія для згенерованих файлів
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/deploy)
 
