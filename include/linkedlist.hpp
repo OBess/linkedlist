@@ -191,7 +191,7 @@ namespace container
             ++_size;
         }
 
-        void push_front(const Type &value)
+        void push_front(Type &&value)
         {
             push_front(Type(value));
         }
@@ -289,6 +289,9 @@ namespace container
         node *_last = nullptr;
         size_type _size = 0;
     };
+
+    template <class Type>
+    linkedlist(std::initializer_list<Type>) -> linkedlist<Type>;
 
 } // namespace container
 
