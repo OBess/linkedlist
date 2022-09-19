@@ -8,7 +8,7 @@ TEST(linkedlist, empty)
 {
     container::linkedlist<int> list;
 
-    EXPECT_FALSE(list.empty());
+    EXPECT_TRUE(list.empty());
 
     list.push_back(0);
 
