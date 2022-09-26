@@ -18,23 +18,23 @@ namespace mvc
         virtual ~base_linkedlist_view() = default;
 
     protected:
-        inline std::shared_ptr<base_linkedlist_controller> &get() noexcept
+        inline class base_linkedlist_controller *controller() noexcept
         {
             return _controller;
         }
 
-        inline const std::shared_ptr<base_linkedlist_controller> &get() const noexcept
+        inline const class base_linkedlist_controller *controller() const noexcept
         {
             return _controller;
         }
 
     private:
-        inline void reset_controller(std::shared_ptr<base_linkedlist_controller> controller)
+        void reset_controller(base_linkedlist_controller *controller)
         {
-            _controller = std::move(controller);
+            _controller = controller;
         }
 
-        std::shared_ptr<base_linkedlist_controller> _controller;
+        base_linkedlist_controller *_controller;
 
         friend base_linkedlist_controller;
     };
