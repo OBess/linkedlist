@@ -12,6 +12,8 @@ include(C:/My/Projects/vcpkg/scripts/buildsystems/vcpkg.cmake)
 # - Директорія для згенерованих файлів
 set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${PROJECT_SOURCE_DIR}/deploy)
 
+include(cmake/imgui-sfml.cmake)
+
 enable_testing()
 add_subdirectory(tests)
 
@@ -19,3 +21,4 @@ file(GLOB src *.cpp *.hpp *.c *.h *.cc)
 add_executable(linkedlist ${src})
 
 target_include_directories(linkedlist PUBLIC "include")
+target_link_libraries(linkedlist PRIVATE lib::imgui_sfml)
