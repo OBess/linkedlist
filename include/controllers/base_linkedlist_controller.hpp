@@ -34,11 +34,13 @@ namespace mvc
         inline void reset_view(base_linkedlist_view *view)
         {
             _view = view;
+            notify(Event::Updated);
         }
 
         inline void reset_list(container::linkedlist<int> &list)
         {
             _list = &list;
+            notify(Event::Updated);
         }
 
     protected:
