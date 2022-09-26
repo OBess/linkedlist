@@ -10,7 +10,7 @@ int main(int /*argc*/, char const * /*argv*/[])
 
     container::linkedlist<int> list;
 
-    linkedlist_controller_sfml controller(&view, list);
+    linkedlist_controller_sfml controller(view, list);
 
     view.show();
 

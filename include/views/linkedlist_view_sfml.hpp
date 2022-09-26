@@ -32,11 +32,40 @@ public:
         ImGui::SFML::Shutdown();
     }
 
-    void init() {}
+    void init()
+    {
+    }
 
-    void show() override {}
+    void show() override
+    {
+        sf::Clock deltaClock;
+        while (_window.isOpen())
+        {
+            sf::Event event;
+            while (_window.pollEvent(event))
+            {
+                ImGui::SFML::ProcessEvent(event);
+
+                if (event.type == sf::Event::Closed)
+                {
+                    _window.close();
+                }
+            }
+
+            ImGui::SFML::Update(_window, deltaClock.restart());
+
+            _window.clear(sf::Color::White);
+
+            ImGui::SFML::Render(_window);
+            _window.display();
+        }
+    }
 
 private:
+    void update(const container::linkedlist<int> &list) override
+    {
+    }
+
     sf::RenderWindow _window;
 };
 

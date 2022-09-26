@@ -19,6 +19,8 @@ namespace mvc
 
         virtual void show() = 0;
 
+        friend base_linkedlist_controller;
+
     protected:
         inline class base_linkedlist_controller *controller() noexcept
         {
@@ -30,6 +32,8 @@ namespace mvc
             return _controller;
         }
 
+        virtual void update(const container::linkedlist<int> &list) = 0;
+
     private:
         void reset_controller(base_linkedlist_controller *controller)
         {
@@ -37,8 +41,6 @@ namespace mvc
         }
 
         base_linkedlist_controller *_controller;
-
-        friend base_linkedlist_controller;
     };
 
 } // namespace mvc

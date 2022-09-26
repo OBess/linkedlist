@@ -21,19 +21,19 @@ namespace mvc
     class base_linkedlist_controller
     {
     public:
-        base_linkedlist_controller(base_linkedlist_view *view, container::linkedlist<int> &list)
-            : _view{view}, _list{&list}
+        base_linkedlist_controller(base_linkedlist_view &view, container::linkedlist<int> &list)
+            : _view{&view}, _list{&list}
         {
-            view->reset_controller(this);
+            view.reset_controller(this);
         }
 
         virtual ~base_linkedlist_controller() = default;
 
         virtual void notify(Event event) = 0;
 
-        inline void reset_view(std::shared_ptr<base_linkedlist_view> view)
+        inline void reset_view(base_linkedlist_view *view)
         {
-            _view = std::move(view);
+            _view = view;
         }
 
         inline void reset_list(container::linkedlist<int> &list)
@@ -42,12 +42,12 @@ namespace mvc
         }
 
     protected:
-        inline std::shared_ptr<base_linkedlist_view> &view() noexcept
+        inline base_linkedlist_view *view() noexcept
         {
             return _view;
         }
 
-        inline const std::shared_ptr<base_linkedlist_view> &view() const noexcept
+        inline const base_linkedlist_view *view() const noexcept
         {
             return _view;
         }
@@ -62,8 +62,16 @@ namespace mvc
             return _list;
         }
 
+        inline void send(const container::linkedlist<int> &list)
+        {
+            if (_view)
+            {
+                _view->update(list);
+            }
+        }
+
     private:
-        std::shared_ptr<base_linkedlist_view> _view;
+        base_linkedlist_view *_view = nullptr;
 
         container::linkedlist<int> *_list = nullptr;
     };
