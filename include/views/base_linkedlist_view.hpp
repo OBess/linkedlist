@@ -17,6 +17,8 @@ namespace mvc
 
         virtual ~base_linkedlist_view() = default;
 
+        virtual void show() = 0;
+
     protected:
         inline class base_linkedlist_controller *controller() noexcept
         {

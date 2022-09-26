@@ -1,11 +1,18 @@
 #include <iostream>
 
-#include <controllers/base_linkedlist_controller.hpp>
+#include <controllers/linkedlist_controller_sfml.hpp>
 #include <models/linkedlist.hpp>
-#include <views/base_linkedlist_view.hpp>
+#include <views/linkedlist_view_sfml.hpp>
 
 int main(int /*argc*/, char const * /*argv*/[])
 {
+    linkedlist_view_sfml view;
+
+    container::linkedlist<int> list;
+
+    linkedlist_controller_sfml controller(&view, list);
+
+    view.show();
 
     return 0;
 }
