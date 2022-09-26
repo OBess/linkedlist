@@ -11,7 +11,7 @@ public:
     linkedlist_controller_sfml(mvc::base_linkedlist_view &view, container::linkedlist<int> &list)
         : mvc::base_linkedlist_controller(view, list)
     {
-        send(*list())
+        send(*(this->list()));
     }
 
     void notify(mvc::Event event) override
