@@ -1,6 +1,6 @@
 #include <iostream>
 
-#include <linkedlist.hpp>
+#include <models/linkedlist.hpp>
 
 int main(int /*argc*/, char const * /*argv*/[])
 {

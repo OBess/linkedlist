@@ -2,7 +2,7 @@
 
 #include <gtest/gtest.h>
 
-#include <linkedlist.hpp>
+#include <models/linkedlist.hpp>
 
 TEST(linkedlist, empty)
 {
