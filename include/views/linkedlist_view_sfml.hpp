@@ -83,9 +83,11 @@ private:
         size_t i = 0;
         for (auto item = std::begin(list); item; ++item)
         {
+            const uint32_t pos_x = (_rec_width + _merge) * (i % _nodes_size) + 8;
+            const uint32_t pos_y = (_rec_width + _merge) * (i / _nodes_size) + _merge;
+
             sf::RectangleShape bg(sf::Vector2f(_rec_width, _rec_width));
-            bg.setPosition(sf::Vector2f((_rec_width + _merge) * (i % _nodes_size) + 8,
-                                        (_rec_width + _merge) * (i / _nodes_size) + _merge));
+            bg.setPosition(sf::Vector2f(pos_x, pos_y));
 
             if ((i + i / _nodes_size) % 2)
                 bg.setFillColor(sf::Color::Blue);
@@ -93,7 +95,20 @@ private:
                 bg.setFillColor(sf::Color::Cyan);
 
             sf::RectangleShape tail;
+
+            static const sf::Font font = std::invoke([fp = _fontPath]()
+                                                     {
+                sf::Font font;
+                font.loadFromFile(fp.data());
+                return font; });
+
             sf::Text number;
+            number.setString(std::to_string(*item));
+            number.setFont(font);
+            number.setCharacterSize(_font_size);
+            number.setStyle(sf::Text::Italic | sf::Text::Bold | sf::Text::Underlined);
+            number.setFillColor(sf::Color::White);
+            number.setPosition(sf::Vector2f(pos_x + _font_size / 2, pos_y + _font_size / 2));
 
             _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number));
 
@@ -120,10 +135,18 @@ private:
         }
     };
 
-    const unsigned _nodes_size = 10;
-    const unsigned _merge = 20;
-    unsigned _rec_width = 0;
+private:
+    const uint32_t _nodes_size = 10;
+
+    const uint32_t _merge = 20;
+
+    uint32_t _rec_width = 0;
+
+    const uint32_t _font_size = 40;
+
     std::vector<Node> _nodes;
+
+    const std::string_view _fontPath = "C:/My/Projects/cpp/linkedlist/resources/fonts/Lato-Italic.ttf";
 };
 
 #endif // INCL_VIEWS_LINKEDLIST_VIEW_SFML_HPP
