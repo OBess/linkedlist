@@ -12,10 +12,10 @@ namespace mvc
 {
     enum class Event : uint8_t
     {
-        Added = 0,
-        Removed = 1,
-        Found = 2,
-        Updated = 3
+        Add = 0,
+        Remove = 1,
+        Find = 2,
+        Update = 3
     };
 
     class base_linkedlist_controller

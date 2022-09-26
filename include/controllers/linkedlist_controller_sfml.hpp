@@ -13,6 +13,27 @@ public:
 
     void notify(mvc::Event event) override
     {
+        switch (event)
+        {
+        case mvc::Event::Add:
+            /* code */
+            break;
+
+        case mvc::Event::Remove:
+            /* code */
+            break;
+
+        case mvc::Event::Find:
+            /* code */
+            break;
+
+        case mvc::Event::Update:
+            /* code */
+            break;
+
+        default:
+            break;
+        }
 
         send(*list());
     }
