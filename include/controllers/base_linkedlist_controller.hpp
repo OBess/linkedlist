@@ -10,6 +10,13 @@
 
 namespace mvc
 {
+    enum class Event : uint8_t
+    {
+        Added = 0,
+        Removed = 1,
+        Found = 2,
+        Updated = 3
+    };
 
     class base_linkedlist_controller
     {
@@ -21,6 +28,8 @@ namespace mvc
         }
 
         virtual ~base_linkedlist_controller() = default;
+
+        virtual void notify(Event event) = 0;
 
         inline void reset_view(std::shared_ptr<base_linkedlist_view> view)
         {
