@@ -3,6 +3,8 @@
 #ifndef INCL_VIEWS_LINKEDLIST_VIEW_SFML_HPP
 #define INCL_VIEWS_LINKEDLIST_VIEW_SFML_HPP
 
+#include <vector>
+
 #include <imgui.h>
 #include <imgui-SFML.h>
 #include <SFML/Graphics.hpp>
@@ -34,6 +36,8 @@ public:
 
     void init()
     {
+        _rec_width = _window.getSize().x / _nodes_size - _merge;
+        _nodes.reserve(_window.getSize().y / _rec_width * _nodes_size);
     }
 
     void show() override
@@ -56,17 +60,64 @@ public:
 
             _window.clear(sf::Color::White);
 
+            draw_nodes();
+
             ImGui::SFML::Render(_window);
             _window.display();
         }
     }
 
 private:
+    void draw_nodes()
+    {
+        for (const auto &node : _nodes)
+        {
+            _window.draw(node);
+        }
+    }
+
     void update(const container::linkedlist<int> &list) override
     {
+        _nodes.clear();
+
+        size_t i = 0;
+        for (const auto &item : list)
+        {
+            sf::RectangleShape bg({_rec_width, _rec_width});
+            bg.setPosition({_rec_width * i + _merge, _rec_width * (i / _nodes_size) + _merge});
+
+            sf::RectangleShape tail;
+            sf::Text number;
+
+            _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number));
+
+            ++i;
+        }
     }
 
     sf::RenderWindow _window;
+
+    struct Node final : sf::Drawable
+    {
+        sf::RectangleShape bg;
+        sf::RectangleShape tail;
+        sf::Text number;
+
+        Node(sf::RectangleShape bg, sf::RectangleShape tail, sf::Text number)
+            : bg{std::move(bg)}, tail{std::move(tail)}, number{std::move(number)} {}
+
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const override
+        {
+            target.draw(bg, states);
+            target.draw(tail, states);
+            target.draw(number, states);
+        }
+    };
+
+    const unsigned _nodes_size = 10;
+    const unsigned _merge = 5;
+    unsigned _rec_width = 0;
+    std::vector<Node> _nodes;
 };
 
 #endif // INCL_VIEWS_LINKEDLIST_VIEW_SFML_HPP
