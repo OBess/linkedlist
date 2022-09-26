@@ -15,7 +15,7 @@ int main(int /*argc*/, char const * /*argv*/[])
         list.push_back(i);
     }
 
-    linkedlist_controller_sfml controller(view, list);
+    linkedlist_controller_sfml controller(&view, &list);
 
     view.show();
 

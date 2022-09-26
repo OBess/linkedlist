@@ -21,10 +21,11 @@ namespace mvc
     class base_linkedlist_controller
     {
     public:
-        base_linkedlist_controller(base_linkedlist_view &view, container::linkedlist<int> &list)
-            : _view{&view}, _list{&list}
+        base_linkedlist_controller(base_linkedlist_view *view, container::linkedlist<int> *list)
+            : _view{view}, _list{list}
         {
-            view.reset_controller(this);
+            view->reset_controller(this);
+            send(*_list);
         }
 
         virtual ~base_linkedlist_controller() = default;

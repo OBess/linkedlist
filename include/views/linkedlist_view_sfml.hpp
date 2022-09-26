@@ -83,8 +83,14 @@ private:
         size_t i = 0;
         for (const auto &item : list)
         {
+            std::cout << "Hello\n"; 
             sf::RectangleShape bg(sf::Vector2f(_rec_width, _rec_width));
             bg.setPosition(sf::Vector2f(_rec_width * i + _merge, _rec_width * (i / _nodes_size) + _merge));
+
+            if (i % 2)
+                bg.setFillColor(sf::Color::Blue);
+            else
+                bg.setFillColor(sf::Color::Cyan);
 
             sf::RectangleShape tail;
             sf::Text number;
