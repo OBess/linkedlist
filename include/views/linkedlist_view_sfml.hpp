@@ -81,13 +81,13 @@ private:
         _nodes.clear();
 
         size_t i = 0;
-        for (const auto &item : list)
+        for (auto item = std::begin(list); item; ++item)
         {
-            std::cout << "Hello\n"; 
             sf::RectangleShape bg(sf::Vector2f(_rec_width, _rec_width));
-            bg.setPosition(sf::Vector2f(_rec_width * i + _merge, _rec_width * (i / _nodes_size) + _merge));
+            bg.setPosition(sf::Vector2f((_rec_width + _merge) * (i % _nodes_size) + 8,
+                                        (_rec_width + _merge) * (i / _nodes_size) + _merge));
 
-            if (i % 2)
+            if ((i + i / _nodes_size) % 2)
                 bg.setFillColor(sf::Color::Blue);
             else
                 bg.setFillColor(sf::Color::Cyan);
@@ -121,7 +121,7 @@ private:
     };
 
     const unsigned _nodes_size = 10;
-    const unsigned _merge = 5;
+    const unsigned _merge = 20;
     unsigned _rec_width = 0;
     std::vector<Node> _nodes;
 };
