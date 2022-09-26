@@ -6,7 +6,7 @@
 
 int main(int /*argc*/, char const * /*argv*/[])
 {
-    linkedlist_view_sfml view(720, 640, "Lab 5. MVC");
+    linkedlist_view_sfml view(1280, 720, "Lab 5. MVC");
 
     container::linkedlist<int> list;
 
