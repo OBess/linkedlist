@@ -42,6 +42,13 @@ public:
 
     void show() override
     {
+        sf::Vector2f oldPos;
+        bool moving = false;
+
+        float zoom = 1;
+
+        sf::View view = _window.getDefaultView();
+
         sf::Clock deltaClock;
         while (_window.isOpen())
         {
@@ -50,9 +57,50 @@ public:
             {
                 ImGui::SFML::ProcessEvent(event);
 
-                if (event.type == sf::Event::Closed)
+                switch (event.type)
                 {
+                case sf::Event::Closed:
                     _window.close();
+                    break;
+                case sf::Event::MouseButtonPressed:
+                    if (event.mouseButton.button == 0)
+                    {
+                        moving = true;
+                        oldPos = _window.mapPixelToCoords(sf::Vector2i(event.mouseButton.x, event.mouseButton.y));
+                    }
+                    break;
+                case sf::Event::MouseButtonReleased:
+                    if (event.mouseButton.button == 0)
+                    {
+                        moving = false;
+                    }
+                    break;
+                case sf::Event::MouseMoved:
+                {
+                    if (!moving)
+                        break;
+                    const sf::Vector2f newPos = _window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+                    const sf::Vector2f deltaPos = oldPos - newPos;
+
+                    view.setCenter(view.getCenter() + deltaPos);
+                    _window.setView(view);
+
+                    oldPos = _window.mapPixelToCoords(sf::Vector2i(event.mouseMove.x, event.mouseMove.y));
+                    break;
+                }
+                case sf::Event::MouseWheelScrolled:
+                    if (moving)
+                        break;
+
+                    if (event.mouseWheelScroll.delta <= -1)
+                        zoom = std::min(2.f, zoom + .1f);
+                    else if (event.mouseWheelScroll.delta >= 1)
+                        zoom = std::max(.5f, zoom - .1f);
+
+                    view.setSize(_window.getDefaultView().getSize());
+                    view.zoom(zoom);
+                    _window.setView(view);
+                    break;
                 }
             }
 
@@ -68,6 +116,10 @@ public:
     }
 
 private:
+    void move_nodes(sf::Vector2f dir) noexcept
+    {
+    }
+
     void draw_nodes()
     {
         for (const auto &node : _nodes)
