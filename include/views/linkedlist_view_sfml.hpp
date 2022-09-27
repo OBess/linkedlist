@@ -132,14 +132,14 @@ private:
     {
         _nodes.clear();
 
-        size_t i = 0;
-        for (auto item = std::begin(list); item; ++item)
+        for (size_t i = 0; i < list.size(); ++i)
         {
-            const uint32_t pos_x = (_rec_width + _merge) * (i % _nodes_size) + 8;
+            const uint32_t pos_x = (_rec_width + _merge) * i + 8;
             const uint32_t pos_y = _window.getSize().y / 2 - _rec_width / 2;
 
 #pragma region Backgound
-            sf::RectangleShape bg(sf::Vector2f(_rec_width, _rec_width));
+            sf::RectangleShape bg;
+            bg.setSize(sf::Vector2f(_rec_width, _rec_width));
             bg.setPosition(sf::Vector2f(pos_x, pos_y));
 
             if (i % 2)
@@ -149,9 +149,14 @@ private:
 #pragma endregion
 
 #pragma region Tail
-            sf::RectangleShape tail(sf::Vector2f(_merge, _merge));
-            tail.setPosition(sf::Vector2f(pos_x + _rec_width, pos_y + _rec_width / 2));
-            tail.setFillColor(sf::Color(115, 25, 140));
+            sf::RectangleShape tail;
+
+            if (i < list.size() - 1)
+            {
+                tail.setSize(sf::Vector2f(_merge, _merge));
+                tail.setPosition(sf::Vector2f(pos_x + _rec_width, pos_y + _rec_width / 2));
+                tail.setFillColor(sf::Color(115, 25, 140));
+            }
 
 #pragma endregion
 
@@ -163,17 +168,15 @@ private:
                 return font; });
 
             sf::Text number;
-            number.setString(std::to_string(*item));
+            number.setString(std::to_string(list[i]));
             number.setFont(font);
             number.setCharacterSize(_font_size);
             number.setStyle(sf::Text::Italic | sf::Text::Bold | sf::Text::Underlined);
             number.setFillColor(sf::Color::White);
-            number.setPosition(sf::Vector2f(pos_x + _rec_width / 2, pos_y + _rec_width / 2));
+            number.setPosition(sf::Vector2f(pos_x + _rec_width / 2 - _font_size / 2, pos_y + _rec_width / 2));
 #pragma endregion
 
             _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number));
-
-            ++i;
         }
     }
 
