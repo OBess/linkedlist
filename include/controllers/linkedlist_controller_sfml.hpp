@@ -28,8 +28,11 @@ public:
             break;
 
         case mvc::Event::Contains:
-            const auto result = list()->contains(_data.item);
-            break;
+        {
+            bool result = list()->contains(_data.item);
+            std::cout << result << '\n';
+        }
+        break;
 
         case mvc::Event::Update:
             (*list())[_data.index] = _data.item;
