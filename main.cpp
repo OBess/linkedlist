@@ -10,11 +10,6 @@ int main(int /*argc*/, char const * /*argv*/[])
 
     container::linkedlist<int> list;
 
-    for (size_t i = 0; i < 20; ++i)
-    {
-        list.push_back(i);
-    }
-
     linkedlist_controller_sfml controller(&view, &list);
 
     view.show();
