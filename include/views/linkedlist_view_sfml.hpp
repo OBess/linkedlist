@@ -36,7 +36,7 @@ public:
 
     void init()
     {
-        _rec_width = _window.getSize().x / _nodes_size - _merge;
+        _rec_width = _window.getSize().x / _nodes_size;
         _nodes.reserve(_window.getSize().y / _rec_width * _nodes_size);
     }
 
@@ -84,15 +84,15 @@ private:
         for (auto item = std::begin(list); item; ++item)
         {
             const uint32_t pos_x = (_rec_width + _merge) * (i % _nodes_size) + 8;
-            const uint32_t pos_y = (_rec_width + _merge) * (i / _nodes_size) + _merge;
+            const uint32_t pos_y = _window.getSize().y / 2 - _rec_width / 2;
 
             sf::RectangleShape bg(sf::Vector2f(_rec_width, _rec_width));
             bg.setPosition(sf::Vector2f(pos_x, pos_y));
 
-            if ((i + i / _nodes_size) % 2)
-                bg.setFillColor(sf::Color::Blue);
+            if (i % 2)
+                bg.setFillColor(sf::Color(50, 60, 168));
             else
-                bg.setFillColor(sf::Color::Cyan);
+                bg.setFillColor(sf::Color(25, 100, 140));
 
             sf::RectangleShape tail;
 
@@ -108,7 +108,7 @@ private:
             number.setCharacterSize(_font_size);
             number.setStyle(sf::Text::Italic | sf::Text::Bold | sf::Text::Underlined);
             number.setFillColor(sf::Color::White);
-            number.setPosition(sf::Vector2f(pos_x + _font_size / 2, pos_y + _font_size / 2));
+            number.setPosition(sf::Vector2f(pos_x + _rec_width / 2, pos_y + _rec_width / 2));
 
             _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number));
 
