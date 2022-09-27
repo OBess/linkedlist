@@ -272,6 +272,20 @@ namespace container
             return get_by_index(index)->data;
         }
 
+        constexpr bool contains(const Type &value) const noexcept
+        {
+            if (_parent == nullptr)
+                return false;
+
+            for (node *cur = _parent; cur->has_next(); cur = cur->next)
+            {
+                if (cur->data == value)
+                    return true;
+            }
+
+            return false;
+        }
+
         constexpr bool empty() const noexcept
         {
             return _parent == nullptr;

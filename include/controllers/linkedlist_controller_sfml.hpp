@@ -15,22 +15,24 @@ public:
 
     void notify(mvc::Event event) override
     {
+        const auto _data = data();
+
         switch (event)
         {
         case mvc::Event::Add:
-            /* code */
+            list()->push_back(_data.index);
             break;
 
-        case mvc::Event::Remove:
-            /* code */
+        case mvc::Event::Pop:
+            list()->pop_back();
             break;
 
         case mvc::Event::Contains:
-            /* code */
+            const auto result = list()->contains(_data.item);
             break;
 
         case mvc::Event::Update:
-            /* code */
+            (*list())[_data.index] = _data.item;
             break;
 
         default:

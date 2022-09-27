@@ -135,14 +135,14 @@ public:
 #pragma region ImGui
             ImGui::Begin("Play with linkedlist<int>");
 
-            ImGui::InputInt("New item", &_item);
-            ImGui::InputInt("Index to remove/contains/update", &_index);
+            ImGui::InputInt("Item to add/contains", &_item);
+            ImGui::InputInt("Index to update", &_index);
 
             if (ImGui::Button("Add"))
                 controller()->notify(mvc::Event::Add);
 
-            if (ImGui::Button("Remove"))
-                controller()->notify(mvc::Event::Remove);
+            if (ImGui::Button("Pop"))
+                controller()->notify(mvc::Event::Pop);
 
             if (ImGui::Button("Contains"))
                 controller()->notify(mvc::Event::Contains);

@@ -13,7 +13,7 @@ namespace mvc
     enum class Event : uint8_t
     {
         Add = 0,
-        Remove = 1,
+        Pop = 1,
         Contains = 2,
         Update = 3
     };
@@ -71,6 +71,11 @@ namespace mvc
             {
                 _view->update(list);
             }
+        }
+
+        inline detail::Data data() const noexcept
+        {
+            return _view->get_data();
         }
 
     private:
