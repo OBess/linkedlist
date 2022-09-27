@@ -14,7 +14,7 @@ namespace mvc
     {
         Add = 0,
         Remove = 1,
-        Find = 2,
+        Contains = 2,
         Update = 3
     };
 

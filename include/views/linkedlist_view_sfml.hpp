@@ -60,6 +60,10 @@ public:
     {
         _rec_width = _window.getSize().x / _nodes_size;
         _nodes.reserve(_window.getSize().y / _rec_width * _nodes_size);
+
+        ImGui::GetIO().Fonts->Clear();
+        ImGui::GetIO().Fonts->AddFontFromFileTTF(_fontPath.data(), 24.f);
+        ImGui::SFML::UpdateFontTexture();
     }
 
     void show() override
@@ -128,6 +132,27 @@ public:
 
             ImGui::SFML::Update(_window, deltaClock.restart());
 
+#pragma region ImGui
+            ImGui::Begin("Play with linkedlist<int>");
+
+            ImGui::InputInt("New item", &_item);
+            ImGui::InputInt("Index to remove/contains/update", &_index);
+
+            if (ImGui::Button("Add"))
+                controller()->notify(mvc::Event::Add);
+
+            if (ImGui::Button("Remove"))
+                controller()->notify(mvc::Event::Remove);
+
+            if (ImGui::Button("Contains"))
+                controller()->notify(mvc::Event::Contains);
+
+            if (ImGui::Button("Update"))
+                controller()->notify(mvc::Event::Update);
+
+            ImGui::End();
+#pragma endregion
+
             _window.clear(sf::Color::White);
 
             for (const auto &node : _nodes)
@@ -193,6 +218,11 @@ private:
         }
     }
 
+    mvc::detail::Data get_data() const override
+    {
+        return {_item, _index};
+    }
+
 private:
     sf::RenderWindow _window;
 
@@ -205,6 +235,8 @@ private:
     const uint32_t _font_size = 40;
 
     std::vector<detail::Node> _nodes;
+
+    int _item{}, _index{};
 
     const std::string_view _fontPath = "C:/My/Projects/cpp/linkedlist/resources/fonts/Lato-Italic.ttf";
 };

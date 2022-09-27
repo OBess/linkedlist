@@ -25,7 +25,7 @@ public:
             /* code */
             break;
 
-        case mvc::Event::Find:
+        case mvc::Event::Contains:
             /* code */
             break;
 

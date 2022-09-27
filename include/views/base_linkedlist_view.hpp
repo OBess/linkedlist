@@ -10,6 +10,19 @@
 namespace mvc
 {
 
+    namespace detail
+    {
+
+        struct Data
+        {
+            int item, index;
+
+            Data(int item, int index)
+                : item{item}, index{index} {}
+        };
+
+    } // namespace detail
+
     class base_linkedlist_view
     {
     public:
@@ -31,6 +44,8 @@ namespace mvc
         }
 
         virtual void update(const container::linkedlist<int> &list) = 0;
+
+        virtual detail::Data get_data() const = 0;
 
     private:
         void reset_controller(base_linkedlist_controller *controller)
