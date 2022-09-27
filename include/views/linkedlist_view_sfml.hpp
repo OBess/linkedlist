@@ -86,6 +86,7 @@ private:
             const uint32_t pos_x = (_rec_width + _merge) * (i % _nodes_size) + 8;
             const uint32_t pos_y = _window.getSize().y / 2 - _rec_width / 2;
 
+#pragma region Backgound
             sf::RectangleShape bg(sf::Vector2f(_rec_width, _rec_width));
             bg.setPosition(sf::Vector2f(pos_x, pos_y));
 
@@ -93,9 +94,16 @@ private:
                 bg.setFillColor(sf::Color(50, 60, 168));
             else
                 bg.setFillColor(sf::Color(25, 100, 140));
+#pragma endregion
 
-            sf::RectangleShape tail;
+#pragma region Tail
+            sf::RectangleShape tail(sf::Vector2f(_merge, _merge));
+            tail.setPosition(sf::Vector2f(pos_x + _rec_width, pos_y + _rec_width / 2));
+            tail.setFillColor(sf::Color(115, 25, 140));
 
+#pragma endregion
+
+#pragma region Text
             static const sf::Font font = std::invoke([fp = _fontPath]()
                                                      {
                 sf::Font font;
@@ -109,6 +117,7 @@ private:
             number.setStyle(sf::Text::Italic | sf::Text::Bold | sf::Text::Underlined);
             number.setFillColor(sf::Color::White);
             number.setPosition(sf::Vector2f(pos_x + _rec_width / 2, pos_y + _rec_width / 2));
+#pragma endregion
 
             _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number));
 
@@ -129,8 +138,8 @@ private:
 
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override
         {
-            target.draw(bg, states);
             target.draw(tail, states);
+            target.draw(bg, states);
             target.draw(number, states);
         }
     };
