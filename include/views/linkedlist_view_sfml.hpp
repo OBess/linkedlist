@@ -136,7 +136,7 @@ public:
 #pragma region ImGui
             ImGui::Begin("Play with linkedlist<int>");
 
-            ImGui::InputInt("Item to add/contains", &_item);
+            ImGui::InputInt("Item to add (value for update)", &_item);
             ImGui::InputInt("Index (orange number) to update", &_index);
 
             if (ImGui::Button("Add"))
@@ -144,9 +144,6 @@ public:
 
             if (ImGui::Button("Pop"))
                 controller()->notify(mvc::Event::Pop);
-
-            if (ImGui::Button("Contains"))
-                controller()->notify(mvc::Event::Contains);
 
             if (ImGui::Button("Update"))
                 controller()->notify(mvc::Event::Update);

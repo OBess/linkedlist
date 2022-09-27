@@ -27,13 +27,6 @@ public:
             list()->pop_back();
             break;
 
-        case mvc::Event::Contains:
-        {
-            bool result = list()->contains(_data.item);
-            std::cout << result << '\n';
-        }
-        break;
-
         case mvc::Event::Update:
             (*list())[_data.index] = _data.item;
             break;

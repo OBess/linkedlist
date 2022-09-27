@@ -14,7 +14,6 @@ namespace mvc
     {
         Add = 0,
         Pop = 1,
-        Contains = 2,
         Update = 3
     };
 
