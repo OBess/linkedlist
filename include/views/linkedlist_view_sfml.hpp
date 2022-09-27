@@ -20,16 +20,17 @@ namespace detail
     {
         sf::RectangleShape bg;
         sf::RectangleShape tail;
-        sf::Text number;
+        sf::Text number, index;
 
-        Node(sf::RectangleShape bg, sf::RectangleShape tail, sf::Text number)
-            : bg{std::move(bg)}, tail{std::move(tail)}, number{std::move(number)} {}
+        Node(sf::RectangleShape bg, sf::RectangleShape tail, sf::Text number, sf::Text index)
+            : bg{std::move(bg)}, tail{std::move(tail)}, number{std::move(number)}, index{std::move(index)} {}
 
         void draw(sf::RenderTarget &target, sf::RenderStates states) const override
         {
             target.draw(tail, states);
             target.draw(bg, states);
             target.draw(number, states);
+            target.draw(index, states);
         }
     };
 
@@ -136,7 +137,7 @@ public:
             ImGui::Begin("Play with linkedlist<int>");
 
             ImGui::InputInt("Item to add/contains", &_item);
-            ImGui::InputInt("Index to update", &_index);
+            ImGui::InputInt("Index (orange number) to update", &_index);
 
             if (ImGui::Button("Add"))
                 controller()->notify(mvc::Event::Add);
@@ -198,13 +199,13 @@ private:
 
 #pragma endregion
 
-#pragma region Text
             static const sf::Font font = std::invoke([fp = _fontPath]()
                                                      {
                 sf::Font font;
                 font.loadFromFile(fp.data());
                 return font; });
 
+#pragma region Text
             sf::Text number;
             number.setString(std::to_string(list[i]));
             number.setFont(font);
@@ -214,7 +215,17 @@ private:
             number.setPosition(sf::Vector2f(pos_x + _rec_width / 2 - _font_size / 2, pos_y + _rec_width / 2));
 #pragma endregion
 
-            _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number));
+#pragma region Index
+            sf::Text index;
+            index.setString(std::to_string(i));
+            index.setFont(font);
+            index.setCharacterSize(_font_size);
+            index.setStyle(sf::Text::Italic | sf::Text::Bold | sf::Text::Underlined);
+            index.setFillColor(sf::Color(252, 94, 3));
+            index.setPosition(sf::Vector2f(pos_x, pos_y));
+#pragma endregion
+
+            _nodes.emplace_back(std::move(bg), std::move(tail), std::move(number), std::move(index));
         }
     }
 

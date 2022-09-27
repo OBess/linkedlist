@@ -72,6 +72,25 @@ TEST(linkedlist, push_front)
     }
 }
 
+TEST(linkedlist, contains)
+{
+    container::linkedlist<int> list{1, 2, 3, 4, 5};
+
+    EXPECT_FALSE(list.contains(-6));
+    EXPECT_FALSE(list.contains(-5));
+    EXPECT_FALSE(list.contains(-4));
+    EXPECT_FALSE(list.contains(-3));
+    EXPECT_FALSE(list.contains(-2));
+    EXPECT_FALSE(list.contains(-1));
+    EXPECT_FALSE(list.contains(0));
+    EXPECT_TRUE(list.contains(1));
+    EXPECT_TRUE(list.contains(2));
+    EXPECT_TRUE(list.contains(3));
+    EXPECT_TRUE(list.contains(4));
+    EXPECT_TRUE(list.contains(5));
+    EXPECT_FALSE(list.contains(6));
+}
+
 int main(int argc, char *argv[])
 {
     testing::InitGoogleTest(&argc, argv);

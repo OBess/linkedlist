@@ -277,7 +277,7 @@ namespace container
             if (_parent == nullptr)
                 return false;
 
-            for (node *cur = _parent; cur->has_next(); cur = cur->next)
+            for (node *cur = _parent; cur; cur = cur->next)
             {
                 if (cur->data == value)
                     return true;
