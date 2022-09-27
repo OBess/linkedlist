@@ -13,6 +13,28 @@
 
 #include "base_linkedlist_view.hpp"
 
+namespace detail
+{
+
+    struct Node final : sf::Drawable
+    {
+        sf::RectangleShape bg;
+        sf::RectangleShape tail;
+        sf::Text number;
+
+        Node(sf::RectangleShape bg, sf::RectangleShape tail, sf::Text number)
+            : bg{std::move(bg)}, tail{std::move(tail)}, number{std::move(number)} {}
+
+        void draw(sf::RenderTarget &target, sf::RenderStates states) const override
+        {
+            target.draw(tail, states);
+            target.draw(bg, states);
+            target.draw(number, states);
+        }
+    };
+
+} // namespace detail
+
 class linkedlist_view_sfml : public mvc::base_linkedlist_view
 {
 public:
@@ -108,7 +130,10 @@ public:
 
             _window.clear(sf::Color::White);
 
-            draw_nodes();
+            for (const auto &node : _nodes)
+            {
+                _window.draw(node);
+            }
 
             ImGui::SFML::Render(_window);
             _window.display();
@@ -116,18 +141,6 @@ public:
     }
 
 private:
-    void move_nodes(sf::Vector2f dir) noexcept
-    {
-    }
-
-    void draw_nodes()
-    {
-        for (const auto &node : _nodes)
-        {
-            _window.draw(node);
-        }
-    }
-
     void update(const container::linkedlist<int> &list) override
     {
         _nodes.clear();
@@ -180,26 +193,9 @@ private:
         }
     }
 
+private:
     sf::RenderWindow _window;
 
-    struct Node final : sf::Drawable
-    {
-        sf::RectangleShape bg;
-        sf::RectangleShape tail;
-        sf::Text number;
-
-        Node(sf::RectangleShape bg, sf::RectangleShape tail, sf::Text number)
-            : bg{std::move(bg)}, tail{std::move(tail)}, number{std::move(number)} {}
-
-        void draw(sf::RenderTarget &target, sf::RenderStates states) const override
-        {
-            target.draw(tail, states);
-            target.draw(bg, states);
-            target.draw(number, states);
-        }
-    };
-
-private:
     const uint32_t _nodes_size = 10;
 
     const uint32_t _merge = 20;
@@ -208,7 +204,7 @@ private:
 
     const uint32_t _font_size = 40;
 
-    std::vector<Node> _nodes;
+    std::vector<detail::Node> _nodes;
 
     const std::string_view _fontPath = "C:/My/Projects/cpp/linkedlist/resources/fonts/Lato-Italic.ttf";
 };
