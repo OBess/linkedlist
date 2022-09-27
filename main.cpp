@@ -1,31 +1,18 @@
 #include <iostream>
 
-#include <linkedlist.hpp>
+#include <controllers/linkedlist_controller_sfml.hpp>
+#include <models/linkedlist.hpp>
+#include <views/linkedlist_view_sfml.hpp>
 
 int main(int /*argc*/, char const * /*argv*/[])
 {
+    linkedlist_view_sfml view(1280, 720, "Lab 5. MVC");
+
     container::linkedlist<int> list;
-    list.push_back(1);
-    list.push_back(2);
-    list.push_back(3);
 
-    std::cout << list[0] << '\n';
-    std::cout << list[1] << '\n';
-    std::cout << list[2] << '\n';
+    linkedlist_controller_sfml controller(&view, &list);
 
-    try
-    {
-        std::cout << list[3] << '\n';
-    }
-    catch (const std::exception &e)
-    {
-        std::cerr << e.what() << '\n';
-    }
-
-    for (auto it = std::begin(list); it; ++it)
-    {
-        std::cout << *it << ", ";
-    }
+    view.show();
 
     return 0;
 }

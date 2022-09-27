@@ -155,6 +155,16 @@ namespace container
             return iterator(_last);
         }
 
+        const iterator cbegin() const noexcept
+        {
+            return iterator(_parent);
+        }
+
+        const iterator cend() const noexcept
+        {
+            return iterator(_last);
+        }
+
         void push_back(Type &&value)
         {
             if (_parent == nullptr)
@@ -260,6 +270,20 @@ namespace container
             }
 
             return get_by_index(index)->data;
+        }
+
+        constexpr bool contains(const Type &value) const noexcept
+        {
+            if (_parent == nullptr)
+                return false;
+
+            for (node *cur = _parent; cur; cur = cur->next)
+            {
+                if (cur->data == value)
+                    return true;
+            }
+
+            return false;
         }
 
         constexpr bool empty() const noexcept
