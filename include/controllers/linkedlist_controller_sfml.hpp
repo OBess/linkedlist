@@ -20,7 +20,7 @@ public:
         switch (event)
         {
         case mvc::Event::Add:
-            list()->push_back(_data.index);
+            list()->push_back(_data.item);
             break;
 
         case mvc::Event::Pop:
